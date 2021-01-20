@@ -1,11 +1,6 @@
 # Unity Style Guide
 
-*This article contains ideas for setting up a projects structure and a naming convention for scripts  and assets*
-
-Info gathered from:
-https://unity3d.com/learn/tutorials/topics/tips/large-project-organisation
-https://github.com/Allar/ue4-style-guide
-http://www.arreverie.com/blogs/unity3d-best-practices-folder-structure-source-control/
+This article contains ideas for setting up a projects structure and a naming convention for scripts and assets in Unity.
 
 <a name="toc"></a>
 ## Table of Contents
@@ -14,7 +9,7 @@ http://www.arreverie.com/blogs/unity3d-best-practices-folder-structure-source-co
 > 1. [Project Structure](#structure)
 > 1. [Scripts](#scripts)
 > 1. [Asset Naming Conventions](#anc)
-> 1. [Asset Workflows](#assetworkflow)
+> 1. [Asset Workflows](#asset-workflows)
 
 <a name="introduction"></a>
 ## 1. Introduction
@@ -33,7 +28,7 @@ If you are working on a project or with a team that has a pre-existing style gui
 
 Style guides should be living documents however and you should propose style guide changes to an existing style guide as well as this guide if you feel the change benefits all usages.
 
-> ##### "Arguments over style are pointless. There should be a style guide, and you should follow it."
+> ##### *Arguments over style are pointless. There should be a style guide, and you should follow it.*
 > [_Rebecca Murphey_](https://rmurphey.com)
 
 #### All structure, assets, and code in any project should look like a single person created it, no matter how many people contributed.
@@ -89,8 +84,12 @@ In this style, we will be using a structure that relies more on filtering and se
 > Using a prefix [naming convention](#asset-name-modifiers), using folders to contain assets of similar types such as `Meshes`, `Textures`, and `Materials` is a redundant practice as asset types are already both sorted by prefix as well as able to be filtered in the content browser.
 <pre>
 Assets
-    <a href="#structure-top-level">ProjectName</a>
+    <a name="#structure-developers">_Developers</a>(Use a `_`to keep this folder at the top)
+        DeveloperName
+            (Work in progress assets)
+    <a name="structure-top-level">ProjectName</a>
             Characters
+            	Anakin
             FX
                 Vehicles
                     Abilities
@@ -106,7 +105,7 @@ Assets
                     Air
                         TieFighter
                             (Models, Textures, Materials, Prefabs)
-            <a href="#structure-levels">Levels</a>
+            <a name="#structure-levels">_Levels</a>
                 Frontend
                 Act1
                     Level1
@@ -114,6 +113,9 @@ Assets
                 HDRI
                 Lut
                 Textures
+            MaterialLibrary
+            	Debug
+            	Shaders
             Objects
                 Architecture (Single use big objects)
                     DeathStar
@@ -125,7 +127,6 @@ Assets
                 Gameplay
                     Input
                 Tools
-            Shaders
             Sound
                 Characters
                 Vehicles
@@ -139,12 +140,12 @@ Assets
                 Resources
                     Fonts
     ExpansionPack (DLC)
-    <a href="#structure-developers">Developers</a>
-        DeveloperName
-            (Work in progress assets)
     Plugins
-    3rd Party SDK  
+    ThirdPartySDK  
 </pre>
+
+
+
 
 The reasons for this structure are listed in the following sub-sections.
 
@@ -156,7 +157,7 @@ The reasons for this structure are listed in the following sub-sections.
 
 > 2.3 [Developer Folders](#structure-developers)
 
-> 2.4 [Levels](#structure-levels)
+> 2.4 [Levels](#levels)
 
 > 2.5 [Define Ownership](#structure-ownership)
 
@@ -175,17 +176,15 @@ The reasons for this structure are listed in the following sub-sections.
 These are common rules for naming any folder in the content structure.
 
 <a name="2.1.1"></a>
-#### 2.1.1 Always Use PascalCase[<sup>*</sup>](#terms-cases)
+#### Always Use [PascalCase](#terms-cases)
 PascalCase refers to starting a name with a capital letter and then instead of using spaces, every following word also starts with a capital letter. For example, `DesertEagle`, `RocketPistol`, and `ASeriesOfWords`.
 
-See [Cases](#terms-cases).
-
 <a name="2.1.2"></a>
-#### 2.1.2 Never Use Spaces
+#### Never Use Spaces
 Re-enforcing [2.1.1](#2.1.1), never use spaces. Spaces can cause various engineering tools and batch processes to fail. Ideally your project's root also contains no spaces and is located somewhere such as `D:\Project` instead of `C:\Users\My Name\My Documents\Unity Projects`.
 
 <a name="2.1.3"></a>
-#### 2.1.3 Never Use Unicode Characters And Other Symbols
+#### Never Use Unicode Characters And Other Symbols
 If one of your game characters is named 'Zoë', its folder name should be `Zoe`. Unicode characters can be worse than [Spaces](#2.1.2) for engineering tools and some parts applications don't support Unicode characters in paths either.
 
 Related to this, if your project has and your computer's user name has a Unicode character (i.e. your name is `Zoë`), any project located in your `My Documents` folder will suffer from this issue. Often simply moving your project to something like `D:\Project` will fix these mysterious issues.
@@ -193,7 +192,7 @@ Related to this, if your project has and your computer's user name has a Unicode
 Using other characters outside `a-z`, `A-Z`, and `0-9` such as `@`, `-`, `_`, `,`, `*`, and `#` can also lead to unexpected and hard to track issues on other platforms, source control, and weaker engineering tools. 
 
 <a name="structure-no-empty-folders"></a>
-#### 2.1.4 No Empty Folders
+#### No Empty Folders
 There simply shouldn't be any empty folders. They clutter the content browser.
 
 If you find that the content browser has an empty folder you can't delete, you should perform the following:
@@ -215,19 +214,19 @@ All of a project's assets should exist in a folder named after the project. For 
 There are multiple reasons for this approach.
 
 <a name="2.2.1"></a>
-#### 2.2.1 No Global Assets
+#### No Global Assets
 Often in code style guides it is written that you should not pollute the global namespace and this follows the same principle. When assets are allowed to exist outside of a project folder it often becomes much harder to enforce a strict structure layout as assets not in a folder encourages the bad behavior of not having to organize assets.
 
 Every asset should have a purpose, otherwise it does not belong in a project. If an asset is an experimental test and shouldn't be used by the project it should be put in a [`Developer`](#2.3) folder.
 
 <a name="2.2.2"></a>
-#### 2.2.2 Reduce Migration Conflicts
+#### Reduce Migration Conflicts
 When working on multiple projects it is common for a team to copy assets from one project to another if they have made something useful for both. 
 
 By placing all project specific assets in a top level folder you reduce the chance of migration conflict when importing those assets into a new project.
 
 <a name="2.2.2e1"></a>
-##### 2.2.2e1 Master Material Example
+##### Master Material Example
 For example, say you created a master material in one project that you would like to use in another project so you migrated that asset over. If this asset is not in a top level folder, it may have a name like `Assets/MaterialLibrary/M_Master`. If the target project doesn't have a master material already, this should work without issue.
 
 As work on one or both projects progress their respective master materials may change to be tailored for their specific projects due to the course of normal development.
@@ -239,14 +238,14 @@ This issue can be hard to predict and hard to account for. The person migrating 
 It is at this point where if the master materials for both projects are incompatible in _any way_, you risk breaking possibly the entire material library for a project as well as any other dependencies that may have already been migrated, simply because assets were not stored in a top level folder. The simple migration of static meshes now becomes a very ugly task.
 
 <a name="2.2.3"></a>
-#### 2.2.3 Samples, Templates, and 3rd Party Content Are Risk-Free
+#### Samples, Templates, and 3rd Party Content Are Risk-Free
 An extension to [2.2.2](#2.2.2), if a team member decides to add sample content, template files, or assets they bought from a 3rd party, it is guaranteed that these new assets will not interfere with the project in any way unless your project's top level folder is not uniquely named.
 
 You can not trust 3rd party content to fully conform to the [top level folder rule](#2.2). There exist many assets that have the majority of their content in a top level folder but also have possibly modified Unity sample content as well as level files polluting the global `Assets` folder.
 
 When adhering to [2.2](#2.2), the worst 3rd party conflict you can have is if two 3rd party assets both have the same sample content. If all your assets are in a project specific folder, including sample content you may have moved into your folder, your project will never break.
 
-#### 2.2.4 DLC, Sub-Projects, and Patches Are Easily Maintained
+#### DLC, Sub-Projects, and Patches Are Easily Maintained
 If your project plans to release DLC or has multiple sub-projects associated with it that may either be migrated out or simply not cooked in a build, assets relating to these projects should have their own separate top level content folder. This make cooking DLC separate from main project content far easier. Sub-projects can also be migrated in and out with minimal effort. If you need to change a material of an asset or add some very specific asset override behavior in a patch, you can easily put these changes in a patch folder and work safely without the chance of breaking the core project.
 
 <a name="2.3"></a>
@@ -260,9 +259,9 @@ If these modular assets were placed in a Developer folder, the world builder sho
 
 Once the assets are ready for use, an artist simply has to move the assets into the project specific folder. This is essentially 'promoting' the assets from experimental to production.
 
-<a name="2.4"></a>
-<a name="structure-levels"></a>
-### 2.4 All Scene[<sup>*</sup>](#terms-level-map) Files Belong In A Folder Called Levels
+
+<a name="levels"></a>
+### 2.4 All [Scene](#terms-level-map) Files Belong In A Folder Called Levels
 Level files are incredibly special and it is common for every project to have its own map naming system, especially if they work with sub-levels or streaming levels. No matter what system of map organization is in place for the specific project, all levels should belong in `Assets/ProjectNameName/Levels`.
 
 Being able to tell someone to open a specific map without having to explain where it is is a great time saver and general 'quality of life' improvement. It is common for levels to be within sub-folders of `Levels`, such as `Levels/Campaign1/` or `Levels/Arenas`, but the most important thing here is that they all exist within `Assets/ProjectNameName/Levels`.
@@ -279,11 +278,11 @@ In teams of more than one, define ownership of zone/assets/features. Some assets
 ### 2.6 Do Not Create Folders Called `Assets` or `AssetTypes`
 
 <a name="2.6.1"></a>
-#### 2.6.1 Creating a folder named `Assets` is redundant.
+#### Creating a folder named `Assets` is redundant.
 All assets are assets.
 
 <a name="2.6.2"></a>
-#### 2.6.2 Creating a folder named `Meshes`, `Textures`, or `Materials` is redundant.
+#### Creating a folder named `Meshes`, `Textures`, or `Materials` is redundant.
 All asset names are named with their asset type in mind. These folders offer only redundant information and the use of these folders can easily be replaced with the robust and easy to use filtering system the Content Browser provides.
 
 Want to view only static mesh in `Environment/Rocks/`? Simply turn on the Static Mesh filter. If all assets are named correctly, they will also be sorted in alphabetical order regardless of prefixes. Want to view both static meshes and skeletal meshes? Simply turn on both filters. this eliminates the need to potentially have to `Control-Click` select two folders in the Content Browser's tree view.
@@ -321,31 +320,34 @@ Any testing or debug materials should be within `MaterialLibrary/Debug`. This al
 <a name="2.9"></a>
 <a name="scene-structure"></a>
 ## 2.9 Scene Structure
-Next to the project’s hierarchy, there’s also scene hierarchy. As before, we’ll present you a template. You can adjust it to your needs.
+Next to the project’s hierarchy, there’s also scene hierarchy. As before, we’ll present you a template. You can adjust it to your needs. Use named empty game objects as scene folders.
 
 <pre>
+Debug
 Management
-GUI
+UI
 Cameras
 Lights
 World
     Terrain
     Props
+Gameplay
+	Actors
+	Items
 _Dynamic
 </pre>
 
-#### 2.9.1 Use named empty game objects as scene folders.
-Carefully organize your scenes to make it easy to find objects. 
- 
-#### 2.9.2 All empty objects should be located at 0,0,0 with default rotation and scale.
-When you’re instantiating an object in runtime, make sure to put it in _Dynamic – do not pollute the root of your hierarchy or you will find it difficult to navigate through it.
+ - All empty objects should be located at 0,0,0 with default rotation and scale.
+ - For empty objects that are only containers for scripts, use “@” as prefix – e.g. @Cheats
+ - When you’re instantiating an object in runtime, make sure to put it in _Dynamic – do not pollute the root of your hierarchy or you will find it difficult to navigate through it.
 
 **[⬆ Back to Top](#table-of-contents)**
 
 <a name="scripts"></a>
+
 ## 3. Scripts
 
-This section will focus on CSharp classes and their internals. When possible, style rules conform to Microsoft's CSharp standard.
+This section will focus on C# classes and their internals. When possible, style rules conform to Microsoft's C# standard.
 
 ### Sections
 > 3.1 [Class Organization](#classorganization)
@@ -364,10 +366,23 @@ Source files should be given the name of the public class in the file.
 
 Organize namespaces with a clearly defined structure,
 
-Class members should be alphabetized, and grouped into sections(Fields, Constructors, Properties, Events, Methods, Private interface implementations, Nested types). 
+Class members should be alphabetized, and grouped into sections:
+* Constant Fields
+* Static Fields
+* Fields
+* Constructors
+* Properties
+* Events / Delegates
+* LifeCycle Methods (Awake, OnEnable, OnDisable, OnDestroy)
+* Public Methods
+* Private Methods
+* Nested types
 
-Declare all member variables at the top of a class, with static variables at the very top.
-
+Within each of these groups order by access:
+* public
+* internal
+* protected
+* private
 ```
 namespace ProjectName
 {
@@ -386,18 +401,33 @@ namespace ProjectName
 	  /// </summary>
       public static decimal Reserves;
  
+	  public string BankName;
+	  public const string ShippingType = "DropShip";
+	  
+	  private float _timeToDie;
+	  
+	  #endregion
+	  
+	  #region Properties
+	  
       public string Number {get; set;}
       public DateTime DateOpened {get; set;}
       public DateTime DateClosed {get; set;}
       public decimal Balance {get; set;}
-
-      private float _timeToDie;
-      
+            
 	  #endregion
 	 
-	  #region Methods
+	  #region LifeCycle
 	  
-      public Account()
+      public Awake()
+      {
+        // ...
+      }
+      
+      #endregion
+	  #region Public Methods
+	  
+      public AddObjectToBank()
       {
         // ...
       }
@@ -414,6 +444,20 @@ To save some time you can overwrite Unity's default script template with your ow
 #### Namespace
 Use a namespace to ensure your scoping of classes/enum/interface/etc won't conflict with existing ones from other namespaces or the global namespace. The project should at minimum use the projects name for the Namespace to prevent conflicts with any imported Third Party assets.
 
+#### All Public Functions Should Have A Summary
+
+Simply, any function that has an access modifier of Public should have its summary filled out. 
+
+```
+/// <summary>
+/// Fire a gun
+/// </summary>
+public void Fire()
+{
+// Fire the gun.
+}
+```
+
 #### Foldout Groups
 If a class has only a small number of variables, Foldout Groups are not required.
 
@@ -421,8 +465,7 @@ If a class has a moderate amount of variables (5-10), all [Serializable](#serial
 
 To create Foldout Groups there are 2 options in Unity. 
 
-* The first is to define a `[Serializable]  
-public class` inside the main class however this can have a performance impact. This allows the use of the same variable name to be shared.
+* The first is to define a `[Serializable] public Class` inside the main class however this can have a performance impact. This allows the use of the same variable name to be shared.
 * The second option is to use the Foldout Group Attribute available with [Odin Inspector](https://odininspector.com/).
 
 ```
@@ -458,7 +501,7 @@ The // (two slashes) style of comment tags should be used in most situations. Wh
 ```
 
 #### Regions
-The `#region` directive enables you to collapse and hide sections of code in CSharp files. The ability to hide code selectively makes your files more manageable and easier to read. 
+The `#region` directive enables you to collapse and hide sections of code in C# files. The ability to hide code selectively makes your files more manageable and easier to read. 
 ```
 #region "This is the code to be collapsed"
     Private components As System.ComponentModel.Container
@@ -472,7 +515,6 @@ Example: `Console.In.Read(myChar, 0, 1);`
 * Do not use a space after the parenthesis and function arguments.
 * Do not use spaces between a function name and parenthesis.
 * Do not use spaces inside brackets.
-
 <a name="3.1"></a>
 <a name="compiling"></a>
 ### 3.2 Compiling
@@ -491,7 +533,7 @@ All non-boolean variable names must be clear, unambiguous, and descriptive nouns
 ##### Case
 All variables use PascalCase unless marked as [private](#privatevariables) which use camelCase. 
 
-Use PascalCasing for abbreviations of 3 characters or more (2 chars are both uppercase).
+Use PascalCase for abbreviations of 4 characters or more (3 chars are both uppercase).
 
 ##### Considered Context
 All variable names must not be redundant with their context as all variable references in the class will always have context.
@@ -641,6 +683,7 @@ The naming of functions, events, and event dispatchers is critically important. 
 
 These questions and more can all be answered when functions are named appropriately.
 
+<a name="function-verbrule"></a>
 #### All Functions Should Be Verbs
 All functions and events perform some form of action, whether its getting info, calculating data, or causing something to explode. Therefore, all functions should start with verbs. They should be worded in the present tense whenever possible. They should also have some context as to what they are doing.
 
@@ -666,7 +709,7 @@ Bad examples:
 * `Color` - Verb with no context, or ambiguous noun.
 
 #### Functions Returning Bool Should Ask Questions
-When writing a function that does not change the state of or modify any object and is purely for getting information, state, or computing a yes/no value, it should ask a question. This should also follow [the verb rule](#bp-funcs-naming-verbs).
+When writing a function that does not change the state of or modify any object and is purely for getting information, state, or computing a yes/no value, it should ask a question. This should also follow [the verb rule](#function-verbrule).
 
 This is extremely important as if a question is not asked, it may be assumed that the function performs an action and is returning whether that action succeeded.
 
@@ -690,7 +733,7 @@ Bad examples:
 * `Visibility` - Is visible? Set visibility? A description of flying conditions?
 
 #### Event Handlers and Dispatchers Should Start With `On`
-Any function that handles an event or dispatches an event should start with `On` and continue to follow [the verb rule](#funcs-naming-verbs).
+Any function that handles an event or dispatches an event should start with `On` and continue to follow [the verb rule](#function-verbrule).
 
 Good examples:
 
@@ -707,68 +750,57 @@ Bad examples:
 * `OnData`
 * `OnTarget`
 
-#### All Public Functions Should Have A Summary
-Simply, any function that has an access modifier of Public should have its summary filled out. 
-```
-/// <summary>
-/// Fire a gun
-/// </summary>
-public void Fire()
-{
-// Fire the gun.
-}
-```
 **[⬆ Back to Top](#table-of-contents)**
-
 <a name="anc"></a>
 <a name="4"></a>
+
 ## 4. Asset Naming Conventions
 Naming conventions should be treated as law. A project that conforms to a naming convention is able to have its assets managed, searched, parsed, and maintained with incredible ease.
 
-Most things are prefixed with prefixes being generally an acronym of the asset type followed by an underscore.
+Most things are prefixed with the prefix generally being an acronym of the asset type followed by an underscore.
 
-**Assets use lowercase**
+**Assets use [PascalCase](#cases)**
 
 <a name="base-asset-name"></a>
 <a name="4.1"></a>
-### 4.1 Base Asset Name - `prefix_baseassetname_variant_suffix`
+### 4.1 Base Asset Name - `Prefix_BaseAssetName_Variant_Suffix`
 All assets should have a _Base Asset Name_. A Base Asset Name represents a logical grouping of related assets. Any asset that is part of this logical group 
-should follow the the standard of  `prefix_baseassetname_variant_suffix`.
+should follow the the standard of  `Prefix_BaseAssetName_Variant_Suffix`.
 
-Keeping the pattern `prefix_baseassetname_variant_suffix` in mind and using common sense is generally enough to warrant good asset names. Here are some detailed rules regarding each element.
+Keeping the pattern `Prefix_BaseAssetName_Variant_Suffix` in mind and using common sense is generally enough to warrant good asset names. Here are some detailed rules regarding each element.
 
-`prefix` and `suffix` are to be determined by the asset type through the following [Asset Name Modifier](#asset-name-modifiers) tables.
+`Prefix` and `Suffix` are to be determined by the asset type through the following [Asset Name Modifier](#asset-name-modifiers) tables.
 
-`baseassetname` should be determined by short and easily recognizable name related to the context of this group of assets. For example, if you had a character named Bob, all of Bob's assets would have the `baseassetname` of `bob`.
+`BaseAssetName` should be determined by short and easily recognizable name related to the context of this group of assets. For example, if you had a character named Bob, all of Bob's assets would have the `BaseAssetName` of `Bob`.
 
-For unique and specific variations of assets, `variant` is either a short and easily recognizable name that represents logical grouping of assets that are a subset of an asset's base name. For example, if Bob had multiple skins these skins should still use `bob` as the `baseassetname` but include a recognizable `variant`. An 'Evil' skin would be referred to as `bob_evil` and a 'Retro' skin would be referred to as `bob_retro`.
+For unique and specific variations of assets, `Variant` is either a short and easily recognizable name that represents logical grouping of assets that are a subset of an asset's base name. For example, if Bob had multiple skins these skins should still use `Bob` as the `BaseAssetName` but include a recognizable `Variant`. An 'Evil' skin would be referred to as `Bob_Evil` and a 'Retro' skin would be referred to as `Bob_Retro`.
 
-For unique but generic variations of assets, `variant` is a two digit number starting at `01`. For example, if you have an environment artist generating nondescript rocks, they would be named `rock_01`, `rock_02`, `rock_03`, etc. Except for rare exceptions, you should never require a three digit variant number. If you have more than 100 assets, you should consider organizing them with different base names or using multiple variant names.
+For unique but generic variations of assets, `Variant` is a two digit number starting at `01`. For example, if you have an environment artist generating nondescript rocks, they would be named `Rock_01`, `Rock_02`, `Rock_03`, etc. Except for rare exceptions, you should never require a three digit variant number. If you have more than 100 assets, you should consider organizing them with different base names or using multiple variant names.
 
-Depending on how your asset variants are made, you can chain together variant names. For example, if you are creating flooring assets for an Arch Viz project you should use the base name `flooring` with chained variants such as `flooring_marble_01`, `flooring_maple_01`, `flooring_tile_squares_01`.
+Depending on how your asset variants are made, you can chain together variant names. For example, if you are creating flooring assets for an Arch Viz project you should use the base name `Flooring` with chained variants such as `Flooring_Marble_01`, `Flooring_Maple_01`, `Flooring_Tile_Squares_01`.
 
 <a name="1.1-examples"></a>
-#### 4.1 Examples
+#### Examples
 
-##### 4.1e1 Bob
+##### Character
 
-| Asset Type              | Asset Name                                                 |
-| ----------------------- | ---------------------------------------------------------- |
-| Skeletal Mesh           | sk_bob                                                     |
-| Material                | m_bob                                                      |
-| Texture (Diffuse/Albedo)| t_bob_d                                                    |
-| Texture (Normal)        | t_bob_n                                                    |
-| Texture (Evil Diffuse)  | t_bob_evil_d                                               |
+| Asset Type               | Asset Name   |
+| ------------------------ | ------------ |
+| Skeletal Mesh            | SK_Bob       |
+| Material                 | M_Bob        |
+| Texture (Diffuse/Albedo) | T_Bob_D      |
+| Texture (Normal)         | T_Bob_N      |
+| Texture (Evil Diffuse)   | T_Bob_Evil_D |
 
-##### 4.1e2 Rocks
+##### Prop
 
-| Asset Type              | Asset Name                                                 |
-| ----------------------- | ---------------------------------------------------------- |
-| Static Mesh (01)        | sm_rock_01                                                  |
-| Static Mesh (02)        | sm_rock_02                                                  |
-| Static Mesh (03)        | sm_rock_03                                                  |
-| Material                | m_rock                                                     |
-| Material Instance (Snow)| mi_rock_snow                                               |
+| Asset Type               | Asset Name   |
+| ------------------------ | ------------ |
+| Static Mesh (01)         | SM_Rock_01   |
+| Static Mesh (02)         | SM_Rock_02   |
+| Static Mesh (03)         | SM_Rock_03   |
+| Material                 | M_Rock       |
+| Material Instance (Snow) | MI_Rock_Snow |
 
 <a name="asset-name-modifiers"></a>
 ### 4.2 Asset Name Modifiers
@@ -793,158 +825,303 @@ When naming an asset use these tables to determine the prefix and suffix to use 
 
 > 4.2.8 [Physics](#anc-physics)
 
-> 4.2.9 [Sound](#anc-sounds)
+> 4.2.9 [Audio](#anc-audio)
 
 > 4.2.10 [User Interface](#anc-ui)
 
 > 4.2.11 [Effects](#anc-effects)
 
 <a name="anc-common"></a>
-#### 4.2.1 Most Common
+#### Most Common
 
 | Asset Type              | Prefix     | Suffix     | Notes                            |
 | ----------------------- | ---------- | ---------- | -------------------------------- |
-| Level / Scene           |  *          |            | [Should be in a folder called Levels.](#2.4) e.g. `Levels/a4_c17_parking_garage.unity` |
-| Level (Persistent)      |            | _p         |                                  |
-| Level (Audio)           |            | _audio     |                                  |
-| Level (Lighting)        |            | _lighting  |                                  |
-| Level (Geometry)        |            | _geo       |                                  |
-| Level (Gameplay)        |            | _gameplay  |                                  |
-| Prefab                  | pf_        |            |                                  |
-| Material                | m_         |            |                                  |
-| Static Mesh             | sm_        |            |                                  |
-| Skeletal Mesh           | sk_        |            |                                  |
-| Texture                 | t_         | _?         | See [Textures](#anc-textures)    |
-| Particle System         | ps_        |            |                                  |
+| Level / Scene           |  *          |            | [Should be in a folder called Levels.](#levels) e.g. `Levels/A4_C17_Parking_Garage.unity` |
+| Level (Persistent)      |            | _P         |                                  |
+| Level (Audio)           |            | _Audio     |                                  |
+| Level (Lighting)        |            | _Lighting  |                                  |
+| Level (Geometry)        |            | _Geo       |                                  |
+| Level (Gameplay)        |            | _Gameplay  |                                  |
+| Prefab                  |        |            |                                  |
+| Material                | M_         |            |                                  |
+| Static Mesh             | SM_       |            |                                  |
+| Skeletal Mesh           | SK_       |            |                                  |
+| Texture                 | T_         | _?         | See [Textures](#anc-textures)    |
+| Particle System         | PS_       |            |                                  |
+
+<a name="anc-models"></a>
+
+#### 4.2.1a 3D Models (FBX Files)
+
+PascalCase
+
+| Asset Type    | Prefix | Suffix | Notes |
+| ------------- | ------ | ------ | ----- |
+| Characters    | CH_    |        |       |
+| Vehicles      | VH_    |        |       |
+| Weapons       | WP_    |        |       |
+| Static Mesh   | SM_    |        |       |
+| Skeletal Mesh | SK_    |        |       |
+| Skeleton      | SKEL_  |        |       |
+| Rig           | RIG_   |        |       |
+
+#### 4.2.1b 3d Models (3ds Max)
+
+All meshes in 3ds Max are lowercase to differentiate them from their FBX export.
+
+| Asset Type    | Prefix | Suffix      | Notes                                   |
+| ------------- | ------ | ----------- | --------------------------------------- |
+| Mesh          |        | _mesh_lod0* | Only use LOD suffix if model uses LOD's |
+| Mesh Collider |        | _collider   |                                         |
 
 <a name="anc-animations"></a>
-#### 4.2.2 Animations
-| Asset Type              | Prefix     | Suffix     | Notes                            |
-| ----------------------- | ---------- | ---------- | -------------------------------- |
-| Animation Clip          | a_         |            |                                  |
-| Animation Controller    | ac_        |            |                                  |
-| Avatar Mask             | am_        |            |                                  |
-| Morph Target            | mt_        |            |                                  |
-| Rig                     | rig_       |            |                                  |
-| Skeletal Mesh           | sk_        |            |                                  |
-| Skeleton                | skel_      |            |                                  |
+
+#### 4.2.2 Animations 
+| Asset Type           | Prefix | Suffix | Notes |
+| -------------------- | ------ | ------ | ----- |
+| Animation Clip       | A_     |        |       |
+| Animation Controller | AC_    |        |       |
+| Avatar Mask          | AM_    |        |       |
+| Morph Target         | MT_    |        |       |
 
 <a name="anc-ai"></a>
 #### 4.2.3 Artificial Intelligence
 
 | Asset Type              | Prefix     | Suffix     | Notes                            |
 | ----------------------- | ---------- | ---------- | -------------------------------- |
-| AI Controller           | aic_       |            |                                  |
-| Behavior Tree           | bt_        |            |                                  |
-| Blackboard              | bb_        |            |                                  |
-| Decorator               | btdecorator_ |          |                                  |
-| Service                 | btservice_ |            |                                  |
-| Task                    | bttask_    |            |                                  |
-| Environment Query       | eqs_       |            |                                  |
-| EnvQueryContext         | eqs_       | context    |                                  |
+| AI Controller           | AIC_     |            |                                  |
+| Behavior Tree           | BT_      |            |                                  |
+| Blackboard              | BB_       |            |                                  |
+| Decorator               | BTDecorator_ |          |                                  |
+| Service                 | BTService_ |            |                                  |
+| Task                    | BTTask_  |            |                                  |
+| Environment Query       | EQS_     |            |                                  |
+| EnvQueryContext         | EQS_     | Context    |                                  |
 
 <a name="anc-prefab"></a>
 #### 4.2.4 Prefabs
 
 | Asset Type              | Prefix     | Suffix     | Notes                            |
 | ----------------------- | ---------- | ---------- | -------------------------------- |
-| Prefab Instance         | pi_       |            |                                  |
-| Prefab                  | p_        |            |                                  |
-| Scriptable Object       | so_        |            |                                  |
+| Prefab         |        |            |                                  |
+| Prefab Instance         | I       |            |                                  |
+| Scriptable Object       |     |        | Assigned "Blueprint" label in Editor |
 
 <a name="anc-materials"></a>
+
 #### 4.2.5 Materials
-| Asset Type              | Prefix     | Suffix     | Notes                            |
-| ----------------------- | ---------- | ---------- | -------------------------------- |
-| Material                | m_         |            |                                  |
-| Material (Post Process) | pp_        |            |                                  |
-| Material Instance       | mi_        |            |                                  |
-| Physical Materials      | pm_        |            |                                  |
+| Asset Type        | Prefix | Suffix | Notes |
+| ----------------- | ------ | ------ | ----- |
+| Material          | M_     |        |       |
+| Material Instance | MI_    |        |       |
+| Physical Material | PM_    |        |       |
 
 <a name="anc-textures"></a>
+
 #### 4.2.6 Textures
 | Asset Type              | Prefix     | Suffix     | Notes                            |
 | ----------------------- | ---------- | ---------- | -------------------------------- |
-| Texture                 | t_         |            |                                  |
-| Texture (Diffuse/Albedo/Base Color)| t_ | _d      |                                  |
-| Texture (Normal)        | t_         | _n         |                                  |
-| Texture (Roughness)     | t_         | _r         |                                  |
-| Texture (Alpha/Opacity) | t_         | _a         |                                  |
-| Texture (Ambient Occlusion) | t_     | _o         |                                  |
-| Texture (Bump)          | t_         | _b         |                                  |
-| Texture (Emissive)      | t_         | _e         |                                  |
-| Texture (Mask)          | t_         | _m         |                                  |
-| Texture (Specular)      | t_         | _s         |                                  |
-| Texture (Packed)        | t_         | _*         | See notes below about [packing](#anc-textures-packing). |
-| Texture Cube            | tc_        |            |                                  |
-| Media Texture           | mt_        |            |                                  |
-| Render Target           | rt_        |            |                                  |
-| Cube Render Target      | rtc_       |            |                                  |
-| Texture Light Profile   | tlp        |            |                                  |
+| Texture                 | T_         |            |                                  |
+| Texture (Diffuse/Albedo/Base Color)| T_ | _D      |                                  |
+| Texture (Normal)        | T_         | _N         |                                  |
+| Texture (Roughness)     | T_         | _R         |                                  |
+| Texture (Alpha/Opacity) | T_         | _A         |                                  |
+| Texture (Ambient Occlusion) | T_     | _AO      |                                  |
+| Texture (Bump)          | T_         | _B         |                                  |
+| Texture (Emissive)      | T_         | _E         |                                  |
+| Texture (Mask)          | T_         | _M         |                                  |
+| Texture (Specular)      | T_         | _S         |                                  |
+| Texture (Packed)        | T_         | _*         | See notes below about [packing](#anc-textures-packing). |
+| Texture Cube            | TC_       |            |                                  |
+| Media Texture           | MT_       |            |                                  |
+| Render Target           | RT_       |            |                                  |
+| Cube Render Target      | RTC_     |            |                                  |
+| Texture Light Profile   | TLP_     |            |                                  |
 
 <a name="anc-textures-packing"></a>
-#### 4.2.6.1 Texture Packing
-It is common practice to pack multiple layers of texture data into one texture. An example of this is packing Emissive, Roughness, Ambient Occlusion together as the Red, Green, and Blue channels of a texture respectively. To determine the suffix, simply stack the given suffix letters from above together, e.g. `_ero`.
 
-> It is generally acceptable to include an Alpha/Opacity layer in your Diffuse/Albedo's alpha channel and as this is common practice, adding `a` to the `_d` suffix is optional.
+#### 4.2.6.1 Texture Packing
+It is common practice to pack multiple layers of texture data into one texture. An example of this is packing Emissive, Roughness, Ambient Occlusion together as the Red, Green, and Blue channels of a texture respectively. To determine the suffix, simply stack the given suffix letters from above together, e.g. `_ERO`.
+
+> It is generally acceptable to include an Alpha/Opacity layer in your Diffuse/Albedo's alpha channel and as this is common practice, adding `A` to the `_D` suffix is optional.
 
 Packing 4 channels of data into a texture (RGBA) is not recommended except for an Alpha/Opacity mask in the Diffuse/Albedo's alpha channel as a texture with an alpha channel incurs more overhead than one without.
 <a name="anc-misc"></a>
+
 #### 4.2.7 Miscellaneous
 
-| Asset Type              | Prefix     | Suffix     | Notes                            |
-| ----------------------- | ---------- | ---------- | -------------------------------- |
-| Float Curve             | curve_     | _float     |                                  |
-| Vector Curve            | curve_     | _vector    |                                  |
+| Asset Type                      | Prefix | Suffix | Notes |
+| ------------------------------- | ------ | ------ | ----- |
+| Universal Render Pipeline Asset | URP_   |        |       |
+| Post Process Volume Profile     | PP_    |        |       |
+| User Interface                  | UI_    |        |       |
 
 <a name="anc-physics"></a>
 #### 4.2.8 Physics
 
-| Asset Type              | Prefix     | Suffix     | Notes                            |
-| ----------------------- | ---------- | ---------- | -------------------------------- |
-| Physical Material       | pm_        |            |                                  |
+| Asset Type        | Prefix | Suffix | Notes |
+| ----------------- | ------ | ------ | ----- |
+| Physical Material | PM_    |        |       |
 
-<a name="anc-sounds"></a>
-<a name="1.2.10"></a>
-#### 4.2.9 Sounds
+<a name="anc-audio"></a>
 
-| Asset Type              | Prefix     | Suffix     | Notes                            |
-| ----------------------- | ---------- | ---------- | -------------------------------- |
-| Audio Clip              | a_         |            |                                  |
-| Audio Mixer             | mix_       |            |                                  |
-| Dialogue Voice          | dv_        |            |                                  |
-| Audio Class             |            |            | No prefix/suffix. Should be put in a folder called AudioClasses |
+#### 4.2.9 Audio
+
+| Asset Type     | Prefix | Suffix | Notes                                                        |
+| -------------- | ------ | ------ | ------------------------------------------------------------ |
+| Audio Clip     | A_     |        |                                                              |
+| Audio Mixer    | MIX_   |        |                                                              |
+| Dialogue Voice | DV_    |        |                                                              |
+| Audio Class    |        |        | No prefix/suffix. Should be put in a folder called AudioClasses |
 
 <a name="anc-ui"></a>
 #### 4.2.10 User Interface
-| Asset Type              | Prefix     | Suffix     | Notes                            |
-| ----------------------- | ---------- | ---------- | -------------------------------- |
-| Font                    | font_      |            |                                  |
+| Asset Type       | Prefix | Suffix | Notes |
+| ---------------- | ------ | ------ | ----- |
+| Font             | Font_  |        |       |
+| Texture (Sprite) | T_     | _GUI   |       |
 
 <a name="anc-effects"></a>
 #### 4.2.11 Effects
-| Asset Type              | Prefix     | Suffix     | Notes                            |
-| ----------------------- | ---------- | ---------- | -------------------------------- |
-| Particle System         | ps_        |            |                                  |
-| Material (Post Process) | pp_        |            |                                  |
+| Asset Type      | Prefix | Suffix | Notes |
+| --------------- | ------ | ------ | ----- |
+| Particle System | PS_    |        |       |
 **[⬆ Back to Top](#table-of-contents)**
 
-<a name="assetworkflow"></a>
-<a name="5"></a>
+<a name="asset-workflows"></a>
+
 ## 5. Asset Workflows
 
-This section describes best practices for creating assets usable in Unity.
+This section describes best practices for creating and importing assets usable in Unity.
 
 <a name="toc"></a>
 ### Sections
 
-> 5.1 [Art Asset Best Practices](#artassets)
+> 5.1 [Unity Asset Import Settings](#unityimport)
+>
 > 5.2 [3ds Max](#3dsmax)
+>
+> 5.3 [Textures](#textures)
+>
+> 5.4 [Audio](#audio)
 
-<a name="artassets"></a>
-### 5.1 Art Asset Best Practices
+<a name="unityimport"></a>
 
-#### Textures
+### 5.1 Unity Asset Import Settings
+
+Unity's [AssetPostprocessor](https://docs.unity3d.com/ScriptReference/AssetPostprocessor.html) lets you hook into the import pipeline and run scripts prior to or after importing assets. This allows you to enforce import settings when assets are first imported into the project. For example textures that end with `_N` can be marked as a Normal Map on import.
+
+Example guide for Import Settings:
+
+https://github.com/justinwasilenko/Unity-AssetPostProcessor
+
+<a name="3dsmax"></a>
+### 5.2 3ds Max
+
+Unity guide on importing from 3ds Max:
+
+https://docs.unity3d.com/2017.4/Documentation/Manual/HOWTO-ImportObjectMax.html
+
+Unity tutorial on the FBX Exporter Package for FBX roundtrip:
+
+https://learn.unity.com/project/3ds-max-to-unity-pipeline
+
+#### Setting up 3ds Max
+
+Unity uses 1 unit = 1 meter. Setup 3ds Max to use Meters by going to ```Customize/Units Setup/System Unit Setup``` and set to 1 Unit = 1 Meter. Using the correct scale is very important for correct Physics / GI / and VR interaction.
+
+Animation frame rate in 3ds Max should be set to 30fps. The ```Time Configuration``` dialog box has 3ds Max's FPS settings
+
+##### Working with Small Objects
+
+* Set ```Customize > Customize User Interface > Mouse Wheel Zoom Increment``` to 0.1m to stop over zooming
+
+* Turn on Viewport Clipping and set the slider on the side of the viewport to be able to zoom in on small meshes. (https://knowledge.autodesk.com/support/3ds-max/learn-explore/caas/sfdcarticles/sfdcarticles/Viewport-Clipping.html)
+
+#### Modeling in 3ds Max
+
+* Follow the [asset naming convention](#anc-models)
+* Avoid super long thin triangles (Speeds up tile based renderers & helps with proper GI baking)
+* Use Area and Angle Weighted Mesh Normals (Unity Import Setting or Create in 3ds Max)
+
+#### Exporting from 3ds Max into Unity
+
+##### Export Settings:
+
+- Triangulate On
+- Tangents and Binormals Off
+- Smoothing Groups On
+- Preserve edge orientation On
+- Units - Automatic Off / Scene Units converted to Meters
+- Axis Conversion Z-up
+
+Models created in 3ds Max use a different coordinate system then Unity. Models need to have their pivot point rotated +90 degrees on the X axis to import into Unity correctly.
+
+To do this quickly, open the MaxScript editor, paste this code and select and drag this code on to a Toolbar in 3ds Max to create a button that will run this script. It applies a Xform modifier to rotate the pivot before exporting.
+
+```
+fn RotateCreationPivot obj rot =
+(
+select obj
+modPanel.addModToSelection (XForm ()) ui:on
+obj.modifiers[#XForm].gizmo.rotation += rot as quat
+rotate obj (inverse rot as quat)
+)
+RotateCreationPivot $ (eulerToQuat(eulerAngles 90 0 0))
+```
+
+
+Script to rotate all objects in 3ds Max scene for export
+
+```
+(
+    mapped fn ProcessObjectsForUnity node =
+    (
+        resetxform node
+        tm = rotatexmatrix 90
+        tm.row4 = node.pos
+        node.transform = tm
+        node.objectoffsetrot = eulerangles -90 0 0
+    )
+    
+    ProcessObjectsForUnity geometry
+)
+```
+
+* Batch Exporter for 3ds Max (http://www.strichnet.com/improving-the-fbx-workflow-between-3ds-max-and-unity3d/)
+
+##### Exporting CAT Animation to FBX
+
+Bind normal bones to the CAT rig for use in skinning and exporting
+
+###### Bind Pose
+
+Set Motion Panel/Layer Manager/"Setup/Animation Mode" Toggle to ```Red```
+Select only the bones and the mesh you wish to export
+Export naming: ModelName.FBX
+
+###### Animation
+
+Set Motion Panel/Layer Manager/"Setup/Animation Mode" to ```Green```
+Select ONLY the bones required in your hierarchy (These should match the exact same bones used for Bind Pose), don't include the mesh.
+Export naming: ModelName@AnimationName.FBX
+The @ symbol is a special Unity naming convention allowing the animation to be bound to the Human.fbx in the Unity editor
+
+#### Importing from 3ds Max into Unity
+
+If importing only animation or bones from a FBX: 
+
+* Set ```Preserve Hierarchy Model``` import option to ```True```
+* Set ```Rig > Avatar Definition``` to ```Copy From Other Avatar```
+
+MaxListener Window, set width and height of selected bones, maybe objects too?
+$.width = 0.01
+$.height = 0.01
+
+**[⬆ Back to Top](#table-of-contents)**
+
+<a name="textures"></a>
+### 5.3 Textures
 
 * Textures follow the [naming convention](#anc-textures) found above. 
 * They are a power of two (For example, 512 x 512 or 256 x 1024).
@@ -963,87 +1140,18 @@ All textures should be of the .PSD format. No layers should be included and only
 
 **[⬆ Back to Top](#table-of-contents)**
 
-<a name="3dsmax"></a>
-### 5.2 3ds Max
+<a name="audio"></a>
+### 5.4 Audio
 
-Unity guide on importing from 3ds Max:
-https://docs.unity3d.com/2017.4/Documentation/Manual/HOWTO-ImportObjectMax.html
+Only import uncompressed audio files in to Unity using WAV or AIFF formats.
 
-#### Setting up 3ds Max
-
-Unity uses 1 unit = 1 meter. Setup 3ds Max to use Meters by going to ```Customize/Units Setup/System Unit Setup``` and set to 1 Unit = 1 Meter. Using the correct scale is very important for correct Physics / GI / and VR interaction.
-
-Animation frame rate in 3ds Max should be set to 30fps. The ```Time Configuration``` dialog box has 3ds Max's FPS settings
-
-##### Working with Small Objects
-
-* Set ```Customize > Customize User Interface > Mouse Wheel Zoom Increment``` to 0.1m to stop over zooming
-
-* Turn on Viewport Clipping and set the slider on the side of the viewport to be able to zoom in on small meshes. (https://knowledge.autodesk.com/support/3ds-max/learn-explore/caas/sfdcarticles/sfdcarticles/Viewport-Clipping.html)
-
-#### Modeling in 3ds Max
-
-* Follow the naming convention
-* Avoid super long thin triangles (helps with proper GI)
-* Use Area and Angle Weighted Mesh Normals (Unity Import Setting or Create in 3ds Max)
-
-#### Exporting from 3ds Max into Unity
-
-Models created in 3ds Max use a different coordinate system then Unity. Models need to have their pivot point rotated +90 degrees on the X axis to import into Unity correctly.
-
-To do this quickly, open the MaxScript editor, paste this code and select and drag this code on to a Toolbar in 3ds Max to create a button that will run this script. It applies a Xform modifier to rotate the pivot before exporting.
-```
-fn RotateCreationPivot obj rot =
-(
-select obj
-modPanel.addModToSelection (XForm ()) ui:on
-obj.modifiers[#XForm].gizmo.rotation += rot as quat
-rotate obj (inverse rot as quat)
-)
-RotateCreationPivot $ (eulerToQuat(eulerAngles 90 0 0))
-```
-* Units > Automatic (Unless scene is not in Meters)
-* Up Axis > Y
-
-Script to rotate all objects in 3ds Max scene for export
-```
-(
-    mapped fn ProcessObjectsForUnity node =
-    (
-        resetxform node
-        tm = rotatexmatrix 90
-        tm.row4 = node.pos
-        node.transform = tm
-        node.objectoffsetrot = eulerangles -90 0 0
-    )
-    
-    ProcessObjectsForUnity geometry
-)
-```
-* Batch Exporter for 3ds Max (http://www.strichnet.com/improving-the-fbx-workflow-between-3ds-max-and-unity3d/)
-
-##### Exporting CAT Animation to FBX
-Bind normal bones to the CAT rig for use in skinning and exporting
-
-###### Bind Pose
-Set Motion Panel/Layer Manager/"Setup/Animation Mode" Toggle to ```Red```
-Select only the bones and the mesh you wish to export
-Export naming: ModelName.FBX
-
-###### Animation
-Set Motion Panel/Layer Manager/"Setup/Animation Mode" to ```Green```
-Select ONLY the bones required in your hierarchy (These should match the exact same bones used for Bind Pose), don't include the mesh.
-Export naming: ModelName@AnimationName.FBX
-The @ symbol is a special Unity naming convention allowing the animation to be bound to the Human.fbx in the Unity editor
-
-#### Importing from 3ds Max into Unity
-
-If importing only animation or bones from a FBX: 
-* Set ```Preserve Hierarchy Model``` import option to ```True```
-* Set ```Rig > Avatar Definition``` to ```Copy From Other Avatar```
-
-MaxListener Window, set width and height of selected bones, maybe objects too?
-$.width = 0.01
-$.height = 0.01
+Great guide on [Unity Audio Import Optimization](https://www.gamasutra.com/blogs/ZanderHulme/20190107/333794/Unity_Audio_Import_Optimisation__getting_more_BAM_for_your_RAM.php)
 
 **[⬆ Back to Top](#table-of-contents)**
+
+
+
+#### Article References:
+https://unity3d.com/learn/tutorials/topics/tips/large-project-organisation
+https://github.com/Allar/ue4-style-guide
+http://www.arreverie.com/blogs/unity3d-best-practices-folder-structure-source-control/
