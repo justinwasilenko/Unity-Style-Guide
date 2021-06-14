@@ -84,7 +84,11 @@ In this style, we will be using a structure that relies more on filtering and se
 > Using a prefix [naming convention](#asset-name-modifiers), using folders to contain assets of similar types such as `Meshes`, `Textures`, and `Materials` is a redundant practice as asset types are already both sorted by prefix as well as able to be filtered in the content browser.
 <pre>
 Assets
-    <a name="#structure-developers">_Developers</a>(Use a `_`to keep this folder at the top)
+    @Imports
+    	(Unity Packages / Imported Assets)
+    @Unity
+	(Default Unity Assets & Engine / System Assets)
+    <a name="#structure-developers">_Dev</a>(Use a `_`to keep this folder at the top)
         DeveloperName
             (Work in progress assets)
     <a name="structure-top-level">ProjectName</a>
@@ -323,12 +327,15 @@ Any testing or debug materials should be within `MaterialLibrary/Debug`. This al
 Next to the project’s hierarchy, there’s also scene hierarchy. As before, we’ll present you a template. You can adjust it to your needs. Use named empty game objects as scene folders.
 
 <pre>
+@System
 Debug
 Management
 UI
 Cameras
 Lights
+    Volumes
 World
+    Architecture
     Terrain
     Props
 Gameplay
@@ -843,11 +850,16 @@ When naming an asset use these tables to determine the prefix and suffix to use 
 | Level (Geometry)        |            | _Geo       |                                  |
 | Level (Gameplay)        |            | _Gameplay  |                                  |
 | Prefab                  |        |            |                                  |
+| Probe (Reflection)      | RP_        |            |                                  |
+| Probe (Light)           | LP_        |            |                                  |
+| Volume                  | V_         |            |                                  |
 | Material                | M_         |            |                                  |
 | Static Mesh             | SM_       |            |                                  |
 | Skeletal Mesh           | SK_       |            |                                  |
 | Texture                 | T_         | _?         | See [Textures](#anc-textures)    |
 | Particle System         | PS_       |            |                                  |
+| Light                   | L_         |            |                                  |
+| Camera (Cinemachine)    | CM_         |            | Virtual Camera                   |
 
 <a name="anc-models"></a>
 
@@ -915,6 +927,7 @@ All meshes in 3ds Max are lowercase to differentiate them from their FBX export.
 | Material          | M_     |        |       |
 | Material Instance | MI_    |        |       |
 | Physical Material | PM_    |        |       |
+| Material Shader Graph | MSG_    |        |       |
 
 <a name="anc-textures"></a>
 
@@ -953,6 +966,7 @@ Packing 4 channels of data into a texture (RGBA) is not recommended except for a
 | Asset Type                      | Prefix | Suffix | Notes |
 | ------------------------------- | ------ | ------ | ----- |
 | Universal Render Pipeline Asset | URP_   |        |       |
+| HD Render Pipeline Asset        | HDRP_  |        |       |
 | Post Process Volume Profile     | PP_    |        |       |
 | User Interface                  | UI_    |        |       |
 
