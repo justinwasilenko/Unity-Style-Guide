@@ -104,6 +104,7 @@ Assets
                 Characters
                 Equipment
                 Input
+		Triggers
                 Vehicles
                     Abilities
                     Air
@@ -341,6 +342,7 @@ World
 Gameplay
 	Actors
 	Items
+	Triggers
 _Dynamic
 </pre>
 
@@ -853,6 +855,7 @@ When naming an asset use these tables to determine the prefix and suffix to use 
 | Probe (Reflection)      | RP_        |            |                                  |
 | Probe (Light)           | LP_        |            |                                  |
 | Volume                  | V_         |            |                                  |
+| Trigger Area            |            | _Trigger   |                                  |
 | Material                | M_         |            |                                  |
 | Static Mesh             | SM_       |            |                                  |
 | Skeletal Mesh           | SK_       |            |                                  |
