@@ -335,10 +335,13 @@ UI
 Cameras
 Lights
     Volumes
+Particles
 World
-    Architecture
-    Terrain
-    Props
+    Global
+    Room1
+        Architecture
+        Terrain
+        Props
 Gameplay
 	Actors
 	Items
