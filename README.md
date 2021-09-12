@@ -106,6 +106,7 @@ Assets
                 Equipment
                 Input
 		Triggers
+		Quests
                 Vehicles
                     Abilities
                     Air
@@ -131,6 +132,8 @@ Assets
             Scripts
                 AI
                 Gameplay
+		    Triggers
+		    Quests
                     Input
                 Tools
             Sound
@@ -347,6 +350,7 @@ Gameplay
 	Actors
 	Items
 	Triggers
+	Quests
 _Dynamic
 </pre>
 
