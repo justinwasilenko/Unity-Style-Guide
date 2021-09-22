@@ -334,9 +334,10 @@ Next to the project’s hierarchy, there’s also scene hierarchy. As before, we
 
 <pre>
 @System
-Debug
-Management
-UI
+@Debug
+@Management
+@UI
+    Layouts
 Cameras
 Lights
     Volumes
