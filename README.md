@@ -107,6 +107,7 @@ Assets
                 Input
 		Triggers
 		Quests
+		Scene
                 Vehicles
                     Abilities
                     Air
