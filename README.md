@@ -342,6 +342,7 @@ Cameras
 Lights
     Volumes
 Particles
+Sound
 World
     Global
     Room1
