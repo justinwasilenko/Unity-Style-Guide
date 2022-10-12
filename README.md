@@ -94,7 +94,9 @@ Assets
         DeveloperName
             (Work in progress assets)
     <a name="structure-top-level">ProjectName</a>
-            Characters
+            AI
+	        FoxMale
+	    Characters
             	Anakin
             FX
 	    	Particles
