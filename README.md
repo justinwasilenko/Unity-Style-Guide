@@ -918,7 +918,7 @@ All meshes in 3ds Max are lowercase to differentiate them from their FBX export.
 
 | Asset Type              | Prefix     | Suffix     | Notes                            |
 | ----------------------- | ---------- | ---------- | -------------------------------- |
-| AI Controller           | AIC_     |            |                                  |
+| AI / NPC                | AI_        |  _NPC          |   *Npc could be pawn of CH_ !AI_                          |
 | Behavior Tree           | BT_      |            |                                  |
 | Blackboard              | BB_       |            |                                  |
 | Decorator               | BTDecorator_ |          |                                  |
