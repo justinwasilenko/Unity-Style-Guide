@@ -82,15 +82,24 @@ The directory structure style of a project should be considered law. Asset namin
 In this style, we will be using a structure that relies more on filtering and search abilities of the Project Window for those working with assets to find assets of a specific type instead of another common structure that groups asset types with folders.
 
 > Using a prefix [naming convention](#asset-name-modifiers), using folders to contain assets of similar types such as `Meshes`, `Textures`, and `Materials` is a redundant practice as asset types are already both sorted by prefix as well as able to be filtered in the content browser.
+
+> IMPORTANT: Development Assets (work in progress or testing assets contained in `_Dev`) should always be prefixed with a `_` to make it easy when configuring things in the inspector
 <pre>
 Assets
-    <a name="#structure-developers">_Developers</a>(Use a `_`to keep this folder at the top)
+    @Imports
+    	(Unity Packages / Imported Assets)
+    @Unity
+	(Default Unity Assets & Engine / System Assets)
+    <a name="#structure-developers">_Dev</a>(Use a `_`to keep this folder at the top)
         DeveloperName
             (Work in progress assets)
     <a name="structure-top-level">ProjectName</a>
-            Characters
+            AI
+	        FoxMale
+	    Characters
             	Anakin
             FX
+	    	Particles
                 Vehicles
                     Abilities
                         IonCannon
@@ -100,6 +109,9 @@ Assets
                 Characters
                 Equipment
                 Input
+		Triggers
+		Quests
+		Scene
                 Vehicles
                     Abilities
                     Air
@@ -125,6 +137,8 @@ Assets
             Scripts
                 AI
                 Gameplay
+		    Triggers
+		    Quests
                     Input
                 Tools
             Sound
@@ -323,17 +337,27 @@ Any testing or debug materials should be within `MaterialLibrary/Debug`. This al
 Next to the project’s hierarchy, there’s also scene hierarchy. As before, we’ll present you a template. You can adjust it to your needs. Use named empty game objects as scene folders.
 
 <pre>
-Debug
-Management
-UI
+@System
+@Debug
+@Management
+@UI
+    Layouts
 Cameras
 Lights
+    Volumes
+Particles
+Sound
 World
-    Terrain
-    Props
+    Global
+    Room1
+        Architecture
+        Terrain
+        Props
 Gameplay
 	Actors
 	Items
+	Triggers
+	Quests
 _Dynamic
 </pre>
 
@@ -843,11 +867,18 @@ When naming an asset use these tables to determine the prefix and suffix to use 
 | Level (Geometry)        |            | _Geo       |                                  |
 | Level (Gameplay)        |            | _Gameplay  |                                  |
 | Prefab                  |        |            |                                  |
+| Probe (Reflection)      | RP_        |            |                                  |
+| Probe (Light)           | LP_        |            |                                  |
+| Volume                  | V_         |            |                                  |
+| Trigger Area            |            | _Trigger   |                                  |
 | Material                | M_         |            |                                  |
 | Static Mesh             | SM_       |            |                                  |
 | Skeletal Mesh           | SK_       |            |                                  |
 | Texture                 | T_         | _?         | See [Textures](#anc-textures)    |
+| Visual Effects          | VFX_       |            |                                  |
 | Particle System         | PS_       |            |                                  |
+| Light                   | L_         |            |                                  |
+| Camera (Cinemachine)    | CM_         |            | Virtual Camera                   |
 
 <a name="anc-models"></a>
 
@@ -889,7 +920,7 @@ All meshes in 3ds Max are lowercase to differentiate them from their FBX export.
 
 | Asset Type              | Prefix     | Suffix     | Notes                            |
 | ----------------------- | ---------- | ---------- | -------------------------------- |
-| AI Controller           | AIC_     |            |                                  |
+| AI / NPC                | AI_        |  _NPC          |   *Npc could be pawn of CH_ !AI_                          |
 | Behavior Tree           | BT_      |            |                                  |
 | Blackboard              | BB_       |            |                                  |
 | Decorator               | BTDecorator_ |          |                                  |
@@ -915,6 +946,7 @@ All meshes in 3ds Max are lowercase to differentiate them from their FBX export.
 | Material          | M_     |        |       |
 | Material Instance | MI_    |        |       |
 | Physical Material | PM_    |        |       |
+| Material Shader Graph | MSG_    |        |       |
 
 <a name="anc-textures"></a>
 
@@ -953,6 +985,7 @@ Packing 4 channels of data into a texture (RGBA) is not recommended except for a
 | Asset Type                      | Prefix | Suffix | Notes |
 | ------------------------------- | ------ | ------ | ----- |
 | Universal Render Pipeline Asset | URP_   |        |       |
+| HD Render Pipeline Asset        | HDRP_  |        |       |
 | Post Process Volume Profile     | PP_    |        |       |
 | User Interface                  | UI_    |        |       |
 
