@@ -86,16 +86,10 @@ In this style, we will be using a structure that relies more on filtering and se
 > IMPORTANT: Development Assets (work in progress or testing assets contained in `_Dev`) should always be prefixed with a `_` to make it easy when configuring things in the inspector
 <pre>
 Assets
-    @Imports
-    	(Unity Packages / Imported Assets)
-    @Unity
-	(Default Unity Assets & Engine / System Assets)
     <a name="#structure-developers">_Dev</a>(Use a `_`to keep this folder at the top)
         DeveloperName
             (Work in progress assets)
     <a name="structure-top-level">ProjectName</a>
-            AI
-	        FoxMale
 	    Characters
             	Anakin
             FX
@@ -954,15 +948,14 @@ All meshes in 3ds Max are lowercase to differentiate them from their FBX export.
 | Asset Type              | Prefix     | Suffix     | Notes                            |
 | ----------------------- | ---------- | ---------- | -------------------------------- |
 | Texture                 | T_         |            |                                  |
-| Texture (Diffuse/Albedo/Base Color)| T_ | _D      |                                  |
+| Texture (Diffuse/Albedo/Base Color)| T_ | _B      |                                  |
+| Texture (Metallic / Smoothness)| T_  | _MS        |                                  |
 | Texture (Normal)        | T_         | _N         |                                  |
-| Texture (Roughness)     | T_         | _R         |                                  |
 | Texture (Alpha/Opacity) | T_         | _A         |                                  |
+| Texture (Height)          | T_         | _H         |                                  |
 | Texture (Ambient Occlusion) | T_     | _AO      |                                  |
-| Texture (Bump)          | T_         | _B         |                                  |
 | Texture (Emissive)      | T_         | _E         |                                  |
 | Texture (Mask)          | T_         | _M         |                                  |
-| Texture (Specular)      | T_         | _S         |                                  |
 | Texture (Packed)        | T_         | _*         | See notes below about [packing](#anc-textures-packing). |
 | Texture Cube            | TC_       |            |                                  |
 | Media Texture           | MT_       |            |                                  |
