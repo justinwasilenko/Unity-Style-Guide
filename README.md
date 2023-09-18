@@ -948,7 +948,7 @@ All meshes in 3ds Max are lowercase to differentiate them from their FBX export.
 | Asset Type              | Prefix     | Suffix     | Notes                            |
 | ----------------------- | ---------- | ---------- | -------------------------------- |
 | Texture                 | T_         |            |                                  |
-| Texture (Base Color)    | T_         | _B         | Diffuse / Albedo     	       |
+| Texture (Base Color)    | T_         | _BC         | Diffuse / Albedo     	       |
 | Texture (Metallic / Smoothness)| T_  | _MS        |                                  |
 | Texture (Normal)        | T_         | _N         |                                  |
 | Texture (Alpha)         | T_         | _A         |                                  |
