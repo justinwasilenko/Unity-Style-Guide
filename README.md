@@ -472,7 +472,7 @@ Simply, any function that has an access modifier of Public should have its summa
 /// </summary>
 public void Fire()
 {
-// Fire the gun.
+	// Fire the gun.
 }
 ```
 
@@ -489,9 +489,9 @@ To create Foldout Groups there are 2 options in Unity.
 ```csharp
 [[Serializable](https://docs.unity3d.com/ScriptReference/Serializable.html)]
 public struct PlayerStats
-	{
-        public int MovementSpeed;
-    }
+{
+	public int MovementSpeed;
+}
     
 [FoldoutGroup("Interactable")]
 public int MovementSpeed = 1;
@@ -514,8 +514,8 @@ Insert one space between the comment delimiter (//) and the comment text, as sho
 
 The // (two slashes) style of comment tags should be used in most situations. Where ever possible, place comments above the code instead of beside it. Here are some examples:
 ```csharp
-        // Sample comment above a variable.
-        private int _myInt = 5;
+// Sample comment above a variable.
+private int _myInt = 5;
 ```
 
 #### Regions
