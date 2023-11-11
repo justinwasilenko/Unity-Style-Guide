@@ -56,7 +56,7 @@ Levels refer to what some people call maps or what Unity calls Scenes. A level c
 
 <a name="terms-serializable"></a>
 #### Serializable
-Variables that are Serializable are shown in the Inspector window in Unity. For more information see Unity's documentation on [Serializable](https://docs.unity3d.com/Manual/script-Serialization.html).
+Variables that are Serializable are shown in the Inspector window in Unity. For more information see Unity's documentation on [Serializable](https://docs.unity3d.com/ScriptReference/Serializable.html) and [script serialization](https://docs.unity3d.com/Manual/script-Serialization.html).
 
 <a name="terms-cases"></a>
 #### Cases
@@ -487,7 +487,7 @@ To create Foldout Groups there are 2 options in Unity.
 * The second option is to use the Foldout Group Attribute available with [Odin Inspector](https://odininspector.com/).
 
 ```csharp
-[[Serializable](https://docs.unity3d.com/ScriptReference/Serializable.html)]
+[Serializable]
 public struct PlayerStats
 {
 	public int MovementSpeed;
