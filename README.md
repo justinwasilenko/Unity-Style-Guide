@@ -522,7 +522,7 @@ The // (two slashes) style of comment tags should be used in most situations. Wh
 The `#region` directive enables you to collapse and hide sections of code in C# files. The ability to hide code selectively makes your files more manageable and easier to read. 
 ```csharp
 #region "This is the code to be collapsed"
-    Private components As System.ComponentModel.Container
+    private System.ComponentModel.IContainer components;
 #endregion
 ```
 
